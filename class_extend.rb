@@ -12,7 +12,7 @@ class String
     raise IOError unless File.exist? self
     enc_from = `nkf -g #{self}`.chomp!.downcase # wrong
     File.open(self, "r") do |f|
-      f.set_encoding(enc_from, Encoding::UTF_8)
+      f.set_encoding(enc_from, Encoding::UTF_8) if enc_from != "utf-8"
       f.read
     end
   end
