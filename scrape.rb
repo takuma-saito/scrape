@@ -273,7 +273,11 @@ class Scrape
       end
 
       def [](idx)
-        @parent.children[idx - 1]
+        name = self.name
+        elems = @parent.children.select do |child|
+          child.name == name
+        end
+        elems[idx - 1]
       end
 
       # 子要素の名前を出力

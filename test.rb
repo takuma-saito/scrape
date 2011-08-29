@@ -10,11 +10,11 @@ text = data.get_file
 scrape = Scrape.new(text)
 
 # scrape.show
-puts scrape.root.html.body.div.center.div[3].content
+puts scrape.root.html.body.div.center.div[5].list
 
-# target = scrape.access do 
-#   # div[7] がおかしい
-#   "/html/body/div/center/div[7]/div/div[2]/table/tr/td/table/tr/td[2]"
-# end
+target = scrape.access do 
+  # div[7] がおかしい
+  "/html/body/div/center/div[5]/div/div[2]/table/tr/td/table/tr/td[2]"
+end
 
-# target.show
+target.show
