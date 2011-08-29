@@ -1,0 +1,1084 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>J-GLOBAL - 日本物理探鑛株式会社 【機関】</title>
+							    <link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="stylesheet" href="./themes/default.css" type="text/css" charset="utf-8" />
+	<link rel="stylesheet" href="./css/page.css" type="text/css" charset="utf-8" />
+	<link rel="stylesheet" href="./css/lightwindow.css" type="text/css" />
+	<link rel="stylesheet" href="./css/jglobal.css" type="text/css" charset="utf-8" />
+	<link rel="stylesheet" href="css/mypage.css" type="text/css" />
+	<link rel="stylesheet" href="./css/style.css" type="text/css">
+	<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+
+	<script type="text/javascript" src="./js/jquery.js"></script>
+	<script type="text/javascript" src="./js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="./js/jquery.jgfeed.js"></script>
+	<script type="text/javascript" src="./lib/bookmark.js"></script>
+	<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.js"></script>
+	<script type="text/javascript" src="./js/jglobal.js"></script>
+	<script type="text/javascript" src="./js/grep_search.js"></script>
+	<script type="text/javascript" src="./js/wordbreak.js"></script>
+	<script type="text/javascript" src="http://maps.google.co.jp/maps?hl=ja&file=api&v=2&key=ABQIAAAAOfIthWMp_2E9fAYzdaSX7RRI9QPQltye69UTBrM291KbSAWxHxQtc3Q8rUwCi8kB9kAncA4rUn6hkA"></script> 
+
+
+    <script type="text/javascript"> 
+$(function(){
+	var news=$("#googleNewsRss").attr("rss");
+	if(news!=""){
+		news = encodeURIComponent(news);
+		$.jGFeed(news,
+		function(feeds){
+			if(!feeds){
+				$('#googleNewsItems>ul').append("関連するニュースが見つかりませんでした");
+				return false;
+			}
+			$("#googleNewsItems").html("<ul></ul>");
+			if(feeds.entries.length==0){
+				$('#googleNewsItems>ul').append("関連するニュースが見つかりませんでした");
+			}else{
+				for(var i=0; i<feeds.entries.length; i++){
+					var entry = feeds.entries[i];
+					var dateObj = new  Date(entry.publishedDate);
+					var y = dateObj.getFullYear();
+					var m  = dateObj.getMonth() + 1; 
+					var d = dateObj.getDate();
+					var h = dateObj.getHours();
+					var date = y+'年'+m+'月'+d+'日'+' '+h+'時';
+					$('#googleNewsItems>ul').append('<li><a href="'+entry.link+'" target="_blank">'+entry.title+'</a> - '+date+'</li>'); 
+				}
+			}
+			if(feeds.entries.length>5){
+				//もっと見るを表示
+				$("#googleNewsMoreLink").css("display","block");
+			}
+		}, 10);
+	}
+	$(".map_canvas").each(function(){
+		address=($(this).attr("address"));
+		//alert(address);
+		if(address!=""){
+			//地図を表示する場合
+			$(this).css("width","270px").css("height","185px");
+			if (GBrowserIsCompatible()) {
+				div=$(this)[0];
+				geocoder = new GClientGeocoder();
+				geocoder.getLatLng(
+					address,
+					function(point) {
+						if (!point) {
+							//alert(address + "geocoding failed");
+							//$(".map_canvas").html("「"+address+"」の座標が取得できませんでした(debug)");
+						} else {
+							var map = new GMap2(div);
+							map.setCenter(point, 12);//ズームレベル
+							var marker = new GMarker(point);
+							map.addOverlay(marker);
+							map.addControl(new GSmallMapControl());
+						}
+					}
+				);
+			}
+		}
+	});
+});
+	</script>
+	<script type="text/javascript">
+$(function(){
+	$(".toggle_closed").html('<font color="gray">折りたたまれています</font>');	//折りたたみ表示
+	relationLoad($(".relateTabButton:first-child"));	//関連検索の実行
+	//関連検索タブの準備
+	$(".relateTabButton").bind("click",function(){
+		//初めに、全タブを標準に戻す。
+		$(".relateTabButton").css("font-weight","normal").css("background-color","transparent");
+		relationLoad($(this));	//関連検索の実行
+		return false;
+	});
+});
+//関連検索の実行
+function relationLoad(element){
+	element.css("font-weight","bold").css("background-color","yellow");
+	var type = element.attr("type");
+	if(type=="related"){
+		var r = element.attr("r");
+		var jid = $("#jid").attr("value");
+		var url="/api/getHtmlForDetailRelate.php?r="+r+"&jid="+jid+"&type=related";
+	}else if(type=="search"){
+		var t = element.attr("t");
+		var q = element.attr("q");	//URLエンコード済
+		//q = encodeURIComponent(q);
+		var url="/api/getHtmlForDetailRelate.php?t="+t+"&q=\""+q+"\"&type=search";
+	}
+	$("#relateList").html("<div align='center'><img src='images/ajax-loading.gif' class='loading' valign='middle'>関連検索中...</div>")
+	$("#relateList").load(url);
+}
+	</script>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17285039-3']);
+  _gaq.push(['_setDomainName', '.jst.go.jp']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+<div class="contents">
+<div class="contentts">
+<div class="contentss">
+<div align="right" style="font-size: smaller; margin-top:15px;">
+<a href=http://www.jst.go.jp/>JST ホーム</a>
+|
+<a href=http://jglobal.jst.go.jp/>J-GLOBAL ホーム</a>
+|
+<a href=https://jglobal.jst.go.jp/jlogin>ログイン</a>
+|
+<a href=http://jglobal.jst.go.jp/home.php>MyJ-GLOBAL</a>
+|
+<a href=http://jglobal.jst.go.jp/footer.php?page=help>ヘルプ</a>
+</div>
+<div style="margin-top:10px"></div>
+
+<table border="0" width="100%">
+<tr>
+	<td width=250 valign="top">
+		                <a href="./?d=0"><img src="img/JGLOBAL_common_1.png" valign="top"></a>
+        	</td>
+	<td align="right">
+<div class="searchbox"><div style="height:24px;width:528"><a href="/search.php?q=&t=0" onClick="return tabChange2(0);"><img src="/img/tab_0.png" border="0" /></a><a href="/search.php?q=&t=1" onClick="return tabChange2(1);"><img src="/img/tab_1.png" border="0" /></a><a href="/search.php?q=&t=2" onClick="return tabChange2(2);"><img src="/img/tab_2.png" border="0" /></a><a href="/search.php?q=&t=3" onClick="return tabChange2(3);"><img src="/img/tab_3.png" border="0" /></a><a href="/search.php?q=&t=4" onClick="return tabChange2(4);"><img src="/img/tab_4.png" border="0" /></a><a href="/search.php?q=&t=5" onClick="return tabChange2(5);"><img src="/img/tab_select_5.png" border="0" /></a><a href="/search.php?q=&t=6" onClick="return tabChange2(6);"><img src="/img/tab_6.png" border="0" /></a><a href="/search.php?q=&t=7" onClick="return tabChange2(7);"><img src="/img/tab_7.png" border="0" /></a><a href="/search.php?q=&t=8" onClick="return tabChange2(8);"><img src="/img/tab_8.png" border="0" /></a><a href="/search.php?q=&t=9" onClick="return tabChange2(9);"><img src="/img/tab_9.png" border="0" /></a></div>
+<table border="0" cellspacing="0" cellpadding="0" width="528" style="border-spacing: 0;padding:0px">
+<form action="search.php" method="get" name="searchForm">
+  <tr style="background:url(/img/searchbox_top.png)"><td colspan="10" style="height:8px"></td></tr>
+  <tr bgcolor="#202B5F" align="left">
+    <td colspan="8">
+      &nbsp;<input type='text' style='width:320pt' name='q' value='"日本物理探鑛株式会社"' id='query_form' autocomplete='off'>
+	<div id="suggest" style="display:none;z-index:1000;"></div>
+	</td>
+      <td colspan="2">
+	<input type="image" src="/img/searchbutton.png" value=" submit " onclick="this.form.submit(); return false;" />
+	</td>
+      </tr>
+    <tr bgcolor="#202B5F" height="15">
+      <td colspan="7" align="left">
+	&nbsp;
+	<span style="font-size:8pt;color:white;">
+	  検索のヒント: 機関名の異表記は自動的に展開されます (例) 科学技術振興機構→JST
+	  </span>
+	</td>
+      <td colspan="3" align="right">
+	<span style="font-size:8pt;color:white;">
+	  <input type="hidden" name="t" value="5" id="tab_form">
+	    <input type="checkbox" style="width:10pt; height:10pt;" name="d" value="1" >一発詳細画面&nbsp;
+	      </span>
+	    </td>
+	  </tr>
+	<tr style="background:url(/img/searchbox_bottom.png);"><td colspan="10" style="height:3px"></td></tr>
+</form>
+</table>
+</div>
+
+
+	</td>
+</tr>
+</table>
+
+<p />
+
+
+
+<div class="bread">
+<table class="table12" cellspacing="0" cellpadding="0">
+<tr>
+<td class="bread1"><img src="img/spacer.gif" width="1" height="1"></td>
+</tr>
+<tr>
+<td class="pd1"><a href="./">TOP</a>&nbsp;>&nbsp;日本物理探鑛株式会社 【機関】 </td>
+</tr>
+<tr>
+<td class="bread3"><img src="img/spacer.gif" width="1" height="1"></td>
+</tr>
+<tr>
+<td class="bread5">J-GLOBALとは、研究者、文献、特許などの情報をつなぐことで、異分野の知や意外な発見などを支援する新しいサービスです。またJST内外の良質なコンテンツへ案内いたします。 &nbsp;&nbsp;<a href="/footer.php?page=aboutus">【詳しくはこちら】</a></td>
+</tr>
+</table>
+</div>
+
+
+
+
+<a name="detail_0"></a>
+
+	<!-- サマリ -->
+
+	<table width = "100%" border=0> 
+		<tr> 
+			<td valign="top"> 
+
+
+<table cellpadding="5" width="100%" style="border-style: dotted; border-width: 1px;"> 
+	<tr> 
+		<td> 
+				<span class="sh1" style="float:left"><img src="img/icons/doc_type_05.gif" border="0" />
+											<b>日本物理探鑛株式会社</b>
+									</span>
+				<div class="bookmark" jid="201105005179340294" /></div>
+								 
+		</td> 
+	</tr> 
+		<tr class="searchResultDescription">
+		<td valign="top">
+			<div class="wordBreak">ニホンブツリタンコウ</div>
+		</td>
+	</tr>
+	</table> 
+ 
+<!--スニペット-->
+<table cellpadding="5" width="100%" style="border-style: dotted; border-width: 1px;" >
+	<tr>
+		<td>
+			<table width="100%">
+				<tr> 
+					<td colspan="2">東京都　大田区　中馬込　２丁目　２－１２ <span class='searchResultExternalLink'>Google マップ</span><a href='http://jglobal.jst.go.jp/redir.php?url=http%3A%2F%2Fmaps.google.co.jp%2Fmaps%3Fq%3D%25E6%259D%25B1%25E4%25BA%25AC%25E9%2583%25BD%25E3%2580%2580%25E5%25A4%25A7%25E7%2594%25B0%25E5%258C%25BA%25E3%2580%2580%25E4%25B8%25AD%25E9%25A6%25AC%25E8%25BE%25BC%25E3%2580%2580%25EF%25BC%2592%25E4%25B8%2581%25E7%259B%25AE%25E3%2580%2580%25EF%25BC%2592%25EF%25BC%258D%25EF%25BC%2591%25EF%25BC%2592&sign=a2430b8f4d07d29783035b1542f47297&iwloc=addr' target='_blank'><img src='http://jglobal.jst.go.jp/img/icons/external_search.png' border='0' alt='検索' title='検索'><img src='http://jglobal.jst.go.jp/img/icons/external_link.png' border='0' alt='外部リンク' title='外部リンク'></a></td> 
+				</tr> 
+				<!-- 外部リンク -->
+							<tr style="border-style: dotted; border-width: 1px;">
+					<td> 
+						<div align="left">
+							<img src="./img/icons/outlink.jpg" border="0"  valign="middle"/>&nbsp;
+																																																																						<a href="footer.php?page=help#3_5_detail_institute_2" target="jglobal_help">
+								<img src="/img/icons/help.gif" border="0" valign="middle">
+							</a>
+						</div> 
+					</td>
+				</tr>
+													<tr class="searchResultExternalLink">
+					<td> 
+						<div align="left">【詳細情報】&nbsp;<a href='http://jglobal.jst.go.jp/redir.php?url=http%3A%2F%2Fwww.n-buturi.co.jp&sign=7b892d8eb9a2a82b9fba888d9a85fdb3' target='jglobal_external'><img src='http://jglobal.jst.go.jp/img/exlink/kikan_hp.png' border='0' alt='機関ホームページ' title='機関ホームページ'></a>&nbsp;</div> 
+					</td>
+				</tr>
+																		<tr class="searchResultExternalLink">
+					<td> 
+						<div align="left">【この研究機関をキーに探す】&nbsp;<a href='http://jglobal.jst.go.jp/redir.php?url=http%3A%2F%2Fjrecin.jst.go.jp%2Fseek%2FSeekJorSearch%3Ffn%3D3%26dispcount%3D10%26keyword_and%3D%25E6%2597%25A5%25E6%259C%25AC%25E7%2589%25A9%25E7%2590%2586%25E6%258E%25A2%25E9%2591%259B%25E6%25A0%25AA%25E5%25BC%258F%25E4%25BC%259A%25E7%25A4%25BE&sign=b9cd3764b97d13ca1bda32acad589ced' target='jglobal_external'><img src='http://jglobal.jst.go.jp/img/exlink/jrec-in.png' border='0' alt='JREC-IN' title='JREC-IN'></a>&nbsp;&nbsp;|&nbsp;<a href='http://jglobal.jst.go.jp/redir.php?url=http%3A%2F%2Fge.nii.ac.jp%2Fgenii%2FSearchServlet%3FLANG%3Dja%26RESEARCH%3D1%26TERM%3D%25C6%25FC%25CB%25DC%25CA%25AA%25CD%25FD%25C3%25B5%25EF%25CA%25B3%25F4%25BC%25B0%25B2%25F1%25BC%25D2&sign=1fdaf81922c658280308c187ab3be55b' target='jglobal_external'><img src='http://jglobal.jst.go.jp/img/exlink/genii.png' border='0' alt='GeNii' title='GeNii'></a>&nbsp;</div> 
+					</td>
+				</tr>
+																<!-- 外部リンク:ここまで -->
+						<tr>
+				<td>
+					<div align="right" nowrap>
+					<a href="print.php?JGLOBAL_ID=201105005179340294&amp;q=&amp;t=5" target="_print">印刷画面</a> | 
+					<a href="/detail.php?JGLOBAL_ID=201105005179340294">URL</a>
+										</div>
+															<a href="#relate_0">関連情報を見る</a>
+									</td> 
+			</tr>
+			</table>
+		</td>
+				<td width="0" align="right">
+			<div class="map_canvas" address="東京都　大田区　中馬込　２丁目　２－１２"></div> 
+		</td>
+	</tr>
+</table>
+<!--検索結果本体--> 
+<!--スニペット-->
+
+<table border="0" cellpadding="5" cellspacing="0" width="100%" style="border-collapse:collapse;margin-top:5px;">
+
+			<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th1">
+		
+		<a name="row0"><b>更新日</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_0" onclick="toggleDetailCol(0,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb1">
+				
+		<div id="col_value_closed0" style="display:none" class="toggle_closed"></div>
+		<div id="col_value0" style="display:block">
+					2010年11月22日
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row1"><b>J-GLOBAL ID</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_1" onclick="toggleDetailCol(1,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed1" style="display:none" class="toggle_closed"></div>
+		<div id="col_value1" style="display:block">
+					201105005179340294
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row2"><b>機関コード</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_2" onclick="toggleDetailCol(2,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed2" style="display:none" class="toggle_closed"></div>
+		<div id="col_value2" style="display:block">
+					10009595099<span style='color:gray;font-size:x-small;vertical-align:super;'>&nbsp;※１</span>
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row3"><b>機関名(漢字)</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_3" onclick="toggleDetailCol(3,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed3" style="display:none" class="toggle_closed"></div>
+		<div id="col_value3" style="display:block">
+					日本物理探鑛株式会社<span style='color:gray;font-size:x-small;vertical-align:super;'>&nbsp;※１</span>
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row4"><b>機関名(フリガナ)</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_4" onclick="toggleDetailCol(4,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed4" style="display:none" class="toggle_closed"></div>
+		<div id="col_value4" style="display:block">
+					ニホンブツリタンコウ<span style='color:gray;font-size:x-small;vertical-align:super;'>&nbsp;※１</span>
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row5"><b>機関名(英)</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_5" onclick="toggleDetailCol(5,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed5" style="display:none" class="toggle_closed"></div>
+		<div id="col_value5" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row6"><b>機関名(その他)</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_6" onclick="toggleDetailCol(6,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed6" style="display:none" class="toggle_closed"></div>
+		<div id="col_value6" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row7"><b>代表者</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_7" onclick="toggleDetailCol(7,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed7" style="display:none" class="toggle_closed"></div>
+		<div id="col_value7" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row8"><b>設立年</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_8" onclick="toggleDetailCol(8,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed8" style="display:none" class="toggle_closed"></div>
+		<div id="col_value8" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row9"><b>所在地（郵便番号）</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_9" onclick="toggleDetailCol(9,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed9" style="display:none" class="toggle_closed"></div>
+		<div id="col_value9" style="display:block">
+					143-0027<span style='color:gray;font-size:x-small;vertical-align:super;'>&nbsp;※１</span>
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row10"><b>所在地</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_10" onclick="toggleDetailCol(10,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed10" style="display:none" class="toggle_closed"></div>
+		<div id="col_value10" style="display:block">
+					東京都　大田区　中馬込　２丁目　２－１２<span style='color:gray;font-size:x-small;vertical-align:super;'>&nbsp;※１</span>
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row11"><b>電話番号</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_11" onclick="toggleDetailCol(11,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed11" style="display:none" class="toggle_closed"></div>
+		<div id="col_value11" style="display:block">
+					03-3774-3211<span style='color:gray;font-size:x-small;vertical-align:super;'>&nbsp;※１</span>
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row12"><b>設置目的</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_12" onclick="toggleDetailCol(12,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed12" style="display:none" class="toggle_closed"></div>
+		<div id="col_value12" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row13"><b>事業概要</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_13" onclick="toggleDetailCol(13,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed13" style="display:none" class="toggle_closed"></div>
+		<div id="col_value13" style="display:block">
+					建築設計業<span style='color:gray;font-size:x-small;vertical-align:super;'>&nbsp;※１</span>
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row14"><b>研究分野</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_14" onclick="toggleDetailCol(14,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed14" style="display:none" class="toggle_closed"></div>
+		<div id="col_value14" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row15"><b>定員</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_15" onclick="toggleDetailCol(15,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed15" style="display:none" class="toggle_closed"></div>
+		<div id="col_value15" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row16"><b>予算額</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_16" onclick="toggleDetailCol(16,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed16" style="display:none" class="toggle_closed"></div>
+		<div id="col_value16" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row17"><b>機構・研究部門名</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_17" onclick="toggleDetailCol(17,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed17" style="display:none" class="toggle_closed"></div>
+		<div id="col_value17" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row18"><b>付属施設名</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_18" onclick="toggleDetailCol(18,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed18" style="display:none" class="toggle_closed"></div>
+		<div id="col_value18" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row19"><b>上位組織(0件)</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_19" onclick="toggleDetailCol(19,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed19" style="display:none" class="toggle_closed"></div>
+		<div id="col_value19" style="display:block">
+																											</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row20"><b>下位組織</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_20" onclick="toggleDetailCol(20,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed20" style="display:none" class="toggle_closed"></div>
+		<div id="col_value20" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row21"><b>沿革(0件)</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_21" onclick="toggleDetailCol(21,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed21" style="display:none" class="toggle_closed"></div>
+		<div id="col_value21" style="display:block">
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row22"><b>研究者</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_22" onclick="toggleDetailCol(22,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed22" style="display:none" class="toggle_closed"></div>
+		<div id="col_value22" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row23"><b>研究課題</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_23" onclick="toggleDetailCol(23,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed23" style="display:none" class="toggle_closed"></div>
+		<div id="col_value23" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row24"><b>文献</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_24" onclick="toggleDetailCol(24,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed24" style="display:none" class="toggle_closed"></div>
+		<div id="col_value24" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row25"><b>特許</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_25" onclick="toggleDetailCol(25,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed25" style="display:none" class="toggle_closed"></div>
+		<div id="col_value25" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row26"><b>証券コード</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_26" onclick="toggleDetailCol(26,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed26" style="display:none" class="toggle_closed"></div>
+		<div id="col_value26" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+				<tr> 
+		<!--key-->
+			<td style="width:170px;" valign="top" class="th2">
+		
+		<a name="row27"><b>有価証券報告書ナンバー</b></a>
+						
+																		<img src="img/icons/bullet_toggle_minus.gif" id="col_button_27" onclick="toggleDetailCol(27,'503');return false;" />
+		
+				</td>
+		<!--key-->
+
+		<!--value-->
+							<td class="tb2">
+				
+		<div id="col_value_closed27" style="display:none" class="toggle_closed"></div>
+		<div id="col_value27" style="display:block">
+					
+				</div>
+		</td>
+		<!--value-->
+
+		</tr> 
+
+
+
+	
+</table>
+
+
+		<table border="0" width="100%"><tr><td>
+	<a name="relate_0"></a><a href="#detail_0">詳細情報を見る</a>
+	</td><td style="text-align:right">
+	<span style='color:gray;font-size:x-small'>※１ 出典：ランドスケイプ</span>
+	</td></tr>
+	</table>
+
+	<h3 style="margin-bottom:4px; margin-top:15px;">関連情報</h3>
+
+	<div class="relateTab">
+	<table border="0" cellpadding="5" cellspacing="0" width="100%" style="border-collapse:collapse;">
+		<tr height="10">
+			<td class="th1">
+														<a class="relateTabButton" r='525' type="related" href="related.php?JGLOBAL_ID=201105005179340294&r=525"><img src="img/icons/doc_type_02.gif" border="0" />関連機関の文献</a>
+																			<a class="relateTabButton" r='535' type="related" href="related.php?JGLOBAL_ID=201105005179340294&r=535"><img src="img/icons/doc_type_03.gif" border="0" />関連機関の特許</a>
+																			<a class="relateTabButton" r='545' type="related" href="related.php?JGLOBAL_ID=201105005179340294&r=545"><img src="img/icons/doc_type_04.gif" border="0" />関連機関の研究課題</a>
+												</td>
+		</tr>
+		<tr height="150">
+			<td valign="middle" class="th1" style="background-color:#ffffff">
+				<div id="relateList">
+					<div align=center><img src='images/ajax-loading.gif' class='loading' valign='middle'>関連検索中...</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	</div>
+	<br>
+
+	
+			<div id="googleNewsRss" rss="http://news.google.com/news?hl=ja&ned=us&ie=UTF-8&oe=UTF-8&output=rss&q=%E6%97%A5%E6%9C%AC%E7%89%A9%E7%90%86%E6%8E%A2%E9%91%9B%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE" >
+		<h3 style="margin:4px;">関連ニュース(Powered by Google)</h3>
+		<div style="background-color:#FAF8CC; padding:5px; font-size:small;">
+			<table>
+				<tr>
+					<td>
+						<div id="googleNewsItems">
+							<div align='center'><img src='images/ajax-loading.gif' class='loading' valign='middle'>関連ニュースを取得中...</div>
+						</div>
+						 <a href="http://news.google.com/news?hl=ja&ned=ja&ie=UTF-8&oe=UTF-8&q=%E6%97%A5%E6%9C%AC%E7%89%A9%E7%90%86%E6%8E%A2%E9%91%9B%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE" target="_blank" id="googleNewsMoreLink" style="display:none">もっと見る（Googleニュースへ）<img src="img/icons/external_search.png"><img src="img/icons/external_link.png"></a>
+					</td>
+				</tr>
+			</table>
+	</div>
+					<h3 style="margin:4px;">こんなページから来ています
+		</h3>
+		<div  style="background-color:#FAF8CC; padding:5px; font-size:small;">
+							<table>
+						<tr>
+							<td>
+								<ul>
+																	該当データが見つかりません
+																</ul>
+	        
+
+							</td>
+						</tr>
+					</table>
+				</div>
+		<br>
+	
+
+
+			</td>
+		</tr> 
+	</table> 
+
+
+<form name="documentForm">
+	<input type="hidden" name="jid" id="jid" value="201105005179340294" />
+</form>
+<hr style="border-width:2px;color:#bbccff;" />
+<div style="text-align:center;font-size:9pt;">
+<a href="footer.php?page=tos">利用規約</a>&nbsp;&nbsp;
+<a href="footer.php?page=policy">プライバシーポリシー</a>&nbsp;&nbsp;
+<a href="footer.php?page=aboutus">J-GLOBALについて</a>&nbsp;&nbsp;
+<a href="footer.php?page=help">ヘルプ</a>&nbsp;&nbsp;
+<a href="/support/">科学技術振興機構へのお問い合わせ</a>&nbsp;&nbsp;
+<a href="footer.php?page=sitemap">サイトマップ</a>
+<br />
+Copyright &copy; 2009 Japan Science and Technology Agency All rights Reserved.
+</div>
+
+</div>
+</div>
+</div>
+</body>
+</html>

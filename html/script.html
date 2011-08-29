@@ -1,0 +1,194 @@
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=Shift_JIS">
+<title>&lt;script&gt; - スクリプト</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<h2><img src="../image/popase.gif" alt="" height=19 width=18> &lt;script&gt; - スクリプト</h2>
+<a target="_top" href="../www.htm">トップ</a> &gt;
+<a target="_top" href="index.htm">HTMLリファレンス</a> &gt;
+&lt;script&gt;
+
+<h4>■ 概要</h4>
+<div class=i>
+<table class=p border=1 cellspacing=0 cellpadding=3 width="85%">
+<tr class=at><th>項目</th><th>説明</th></tr>
+<tr><th nowrap><a href="memo/intro.htm#Form">形式</a></th><td>&lt;script&gt;～&lt;/script&gt;</td></tr>
+<tr><th nowrap><a href="memo/intro.htm#Support">サポート</a></th><td>H3+ / e3+ / N2+ / Fx1+ / Op6+ / Ch1+ / Sa1+</td></tr>
+<tr><th nowrap><a href="memo/intro.htm#Optional">タグの省略</a></th><td>開始タグ：必須、終了タグ：必須</td></tr>
+<tr><th nowrap><a href="memo/intro.htm#Include">包含可能要素</a></th><td>文字列</td></tr>
+</table>
+</div>
+
+<h4>■ 説明</h4>
+<div class=i>
+<p>&lt;script&gt; は、JavaScript などのスクリプトを記述するために用います。</p>
+<p>主に JavaScript を実行するために使用されますが、VBScript など別のスクリプトも実行可能です。</p>
+</div>
+
+<h4>■ 属性</h4>
+<div class=i>
+【固有属性】
+<table class=p border=1 cellspacing=0 cellpadding=3 width="85%">
+<tr class=at><th>属性</th><th>意味</th></tr>
+<tr>
+<td><b>src</b>=<i><a href="attr/url.htm">url</a></i></td><td>H4+/e4+/N3+。外部スクリプトファイルのURLを指定します。</td>
+</tr>
+<tr>
+<td><b>type</b>=<i>type</i></td><td>H4+/e4+/N4+。スクリプトの言語を type="text/javascript" のような MIMEタイプで指定します。HTML4.01では必須の属性として定義されています。</td>
+</tr>
+<tr>
+<td><b>defer</b></td><td>H4+/e4+。スクリプトを非同期に読み込みます。詳細は後述。</td>
+</tr>
+<tr>
+<td><b>async</b></td><td>H5+。スクリプトを非同期に読み込み・実行します。詳細は後述。</td>
+</tr>
+<tr>
+<td><b>charset</b>=<i>charset</i></td><td>H4+。スクリプトのキャラクタセットを指定します。</td>
+</tr>
+</table>
+<br>
+【その他属性】
+<table class=p border=1 cellspacing=0 cellpadding=3 width="85%">
+<tr class=at><th>属性</th><th>意味</th></tr>
+<tr>
+<td><b>language</b>=<i>lang</i></td><td>H4T/e2/N2。スクリプト言語を指定します。現在では type属性を使用することが推奨されています。</td>
+</tr>
+<tr>
+<td><b>event</b>=<i>event</i></td><td>H4/e4+。将来の機能のために予約されていましたが、HTML5 では廃止の予定です。</td>
+</tr>
+<tr>
+<td><b>for</b>=<i>id</i></td><td>H4+/e3+。将来の機能のために予約されていましたが、HTML5 では廃止の予定です。</td>
+</tr>
+</table>
+<br>
+【一般属性】
+<table class=p border=1 cellspacing=0 cellpadding=3 width="85%">
+<tr class=at><th>属性</th><th>意味</th></tr>
+<tr>
+<td><b><a href="attr/class.htm">class</a></b>=<i>class</i></td><td>H4+/e3+/N4+。クラスを指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/id.htm">id</a></b>=<i>id</i></td><td>H4+/e3+/N4+。ID を指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/style.htm">style</a></b>=<i>style</i></td><td>H4+/e3+/N4+。スタイルシートを指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/title.htm">title</a></b>=<i>title</i></td><td>H4+/e4+/N6+。タイトルを指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/dir.htm">dir</a></b>=<i>dir</i></td><td>H4+/e5+/N6+。文字の表示方向を指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/lang.htm">lang</a></b>=<i>lang</i></td><td>H4+/e4+/N6+。言語を指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/accesskey.htm">accesskey</a></b>=<i>key</i></td><td>H5+。アクセスキーを指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/tabindex.htm">tabindex</a></b>=<i>n</i></td><td>H5+。タブインデックスを指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/contenteditable.htm">contenteditable</a></b>=<i>bool</i></td><td>H5+/e55+。要素を編集可能にします。</td>
+</tr>
+<tr>
+<td><b><a href="attr/contextmenu.htm">contextmenu</a></b>=<i>id</i></td><td>H5+。コンテキストメニューを指定します。</td>
+</tr>
+<tr>
+<td><b><a href="attr/draggable.htm">draggable</a></b>=<i>bool</i></td><td>H5+。ドラッグを可能にします。</td>
+</tr>
+<tr>
+<td><b><a href="attr/dropzone.htm">dropzone</a></b>=<i>value</i></td><td>H5+。ドロップを可能にします。</td>
+</tr>
+<tr>
+<td><b><a href="attr/hidden.htm">hidden</a></b></td><td>H5+。要素を非表示にします。</td>
+</tr>
+<tr>
+<td><b><a href="attr/spellcheck.htm">spellcheck</a></b>=<i>bool</i></td><td>H5+。スペルをチェックします。</td>
+</tr>
+<tr>
+<td><a href="attr/ieext.htm">IE拡張属性</a></td><td>他にもIEで拡張された属性が指定可能です。</td>
+</tr>
+</table>
+</div>
+
+<!--
+<h4>■ language 属性</h4>
+<div class=i>
+<p>language 属性には、使用する言語とそのバージョンを指定します。ブラウザによってサポートしている言語やバージョンが異なります。</p>
+<table class=p border=1 cellspacing=0 cellpadding=3 width="85%">
+<col>
+<col span=8 align=center>
+<tr class=at><th rowspan=2>値</th><th colspan=4>IE</th><th colspan=4>Netscapeブラウザ</th></tr>
+<tr class=at><th>2.0</th><th>3.0</th><th>4.0</th><th>5.0</th><th>2.0</th><th>3.0</th><th>4.0<br>～<br>4.05</th><th>4.06<br>4.5</th></tr>
+<tr><td><b>JavaScript</b></td><td>×</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr>
+<tr><td><b>JavaScript1.0</b></td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td></tr>
+<tr><td><b>JavaScript1.1</b></td><td>×</td><td>×</td><td>○</td><td>○</td><td>×</td><td>○</td><td>○</td><td>○</td></tr>
+<tr><td><b>JavaScript1.2</b></td><td>×</td><td>×</td><td>○</td><td>○</td><td>×</td><td>×</td><td>○</td><td>○</td></tr>
+<tr><td><b>JavaScript1.3</b></td><td>×</td><td>×</td><td>○</td><td>○</td><td>×</td><td>×</td><td>×</td><td>○</td></tr>
+<tr><td><b>Jscript</b></td><td>×</td><td>？</td><td>○</td><td>○</td><td>×</td><td>×</td><td>×</td><td>×</td></tr>
+<tr><td><b>VBScript</b></td><td>×</td><td>○</td><td>○</td><td>○</td><td>×</td><td>×</td><td>×</td><td>×</td></tr>
+<tr><td><b>VBS</b></td><td>×</td><td>？</td><td>○</td><td>○</td><td>×</td><td>×</td><td>×</td><td>×</td></tr>
+</table>
+<p>language 属性と似たものに type 属性があります。type 属性には、text/javascript や text/vbscript などの MIMEタイプを指定します。HTML4.0では、language 属性を「<a href="memo/policy.htm#Deprecated">非推奨</a>」、type 属性を「必須」としています。特に、language 属性で JavaScript のバージョンを明示的に指定するのでなければ、type 属性を用いておけば無難でしょう。</p>
+</div>
+-->
+
+<h4>■ 外部スクリプトファイル</h4>
+<div class=i>
+<p>src 属性を用いると、JavaScript ファイルを外部ファイルで記述できます。例えば、xxx.js ファイルに下記の内容を記述しておきます。&lt;script&gt; や &lt;!-- や // --&gt; は不用です。</p>
+<pre class=c>
+alert("Hello!!");
+</pre>
+<p>これを、HTMLファイルから下記のように呼び出します。</p>
+<pre class=c>
+&lt;script type="text/javascript" src="xxx.js"&gt;&lt;/script&gt;
+</pre>
+<p>ただし、Internet Explorer 4.0 では、src で指定した外部ファイルで日本語を使用する場合は、必ずシフトJISにしなくてはならないなど、いくつか制限があるようです。</p>
+<p>JavaScript に関する詳細は「<a target="_top" href="../js/index.htm">とほほのJavaScriptリファレンス</a>」などを参照してください。</p>
+</div>
+
+<h4>■ 使用例</h4>
+<div class=i>
+<table class=p border=1 cellspacing=0 cellpadding=3 width="85%">
+<tr class=ss><th>HTMLソース</th></tr>
+<tr><td><pre>
+&lt;script type="text/javascript"&gt;
+&lt;!--
+x = 5;
+y = 3;
+document.write("答は");
+document.write(x + y);
+document.write("です。");
+// --&gt;
+&lt;/script&gt;
+</pre></td></tr>
+</table>
+<br>
+<table class=p border=1 cellspacing=0 cellpadding=3 width="85%">
+<tr class=sv><th>ブラウザ表示例</th></tr>
+<tr><td>
+答は8です。
+</td></tr>
+</table>
+</div>
+
+<h4>■ async と defer</h4>
+<div class=i>
+<p>外部スクリプトファイルを読み込む場合、async属性と defer属性でスクリプト読み込み・実行のタイミングを制御することができます。asyncも defer も指定しない &lt;script src="..."&gt; があると、ブラウザはレンダリングを中断してスクリプトファイルを読み込み、実行した後、レンダリングを再開します。asyncを指定した場合は、レンダリングとスクリプトの読み込み・実行を非同期に平行して実行します。deferを指定した場合は、レンダリングとスクリプトの読み込みを非同期に平行して実行しますが、スクリプトの実行はレンダリング完了後になります。</p>
+<p>async や defer を指定した外部スクリプトは、その実行順序が保障されなくなるため、依存関係のあるライブラリに async や defer を指定することはできません。また、async や defer を指定した外部スクリプトでは、document.write() など、レンダリングに直接影響のある記述を用いてはなりません。</p>
+</div>
+
+<h4>■ 関連項目</h4>
+<div class=i>
+<a href="noscript.htm">&lt;noscript&gt;</a>
+</div>
+
+<hr>
+<div>Copyright (C) 1996-2011 杜甫々</div>
+<div>初版：2000年10月9日 最終更新：2011年6月11日</div>
+<div>http://www.tohoho-web.com/html/script.htm</div>
+</body>
+</html>
