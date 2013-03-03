@@ -3,18 +3,15 @@ require_relative("class_extend")
 require_relative("scrape")
 
 # スクレイピングを行う
-data = "html/index.html"
+data = "html/google.html"
 text = data.get_file
-
-# スクレイピングを行う
 scrape = Scrape.new(text)
 
 # scrape.show
-puts scrape.root.html.body.div.center.div[5].list
+# puts scrape.root.html.body.div.center.div[5].list
 
 target = scrape.access do 
-  # div[7] がおかしい
-  "/html/body/div/center/div[5]/div/div[2]/table/tr/td/table/tr/td[2]"
+  "/html/head/body/div[2]/div/div/div[8]/div[2]/div/div[2]/div/ol/li[2]/div/div[2]/span"
 end
 
 target.show

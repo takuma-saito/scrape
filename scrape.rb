@@ -1,3 +1,4 @@
+
 # coding: utf-8
 # html を解析するスクリプト
 
@@ -39,7 +40,7 @@ class Scrape
        "li", "link", "meta", "nobr", "noembed", "object", "p", "pre",
        "s", "script", "select", "small", "span", "strike", "strong",
        "sub", "sup", "table", "tbody", "td", "textarea", "tfoot", "th",
-       "thead", "title", "tr", "tt", "u", "ul", "!DOCTYPE", "address",
+       "thead", "title", "tr", "tt", "u", "ul", "ol", "!DOCTYPE", "address",
        "center"]
 
     def initialize(html)
@@ -139,10 +140,9 @@ class Scrape
       target
     end
 
-    def access(args = {}, &block)
+    def access(args = {}, obj = @root, &block)
       args[:sp] = (args.include? :sp) ? args[:sp] : "/"
       domain = Domain.new(args, &block)
-      obj = @root
       domain.each do |dom|
         obj = obj.send dom[:name].to_sym
         if dom[:number] > 0
@@ -240,14 +240,6 @@ class Scrape
         id
       end
 
-      # 普通の要素を取得する
-      def get_tag(dom)
-        remove_class dom if exist_class? dom
-        remove_id dom if exist_id? dom
-        remove_number dom if exist_number? dom
-        dom
-      end
-
       # 数字を取得する
       def get_number(dom)
         if match = /[([0-9]*?)]/.match(dom)
@@ -255,6 +247,14 @@ class Scrape
         else
           0
         end
+      end
+
+      # 普通の要素を取得する
+      def get_tag(dom)
+        remove_class dom if exist_class? dom
+        remove_id dom if exist_id? dom
+        remove_number dom if exist_number? dom
+        dom
       end
 
     end
@@ -273,15 +273,26 @@ class Scrape
       end
 
       def [](idx)
-        name = self.name
         elems = @parent.children.select do |child|
-          child.name == name
+          child.name == self.name
         end
         elems[idx - 1]
       end
 
+      # 現在のカレントパスを表示する
+      def pwd
+        names = []
+        curr = self
+        loop do 
+          break if curr.tag.nil?
+          names << curr.tag.name
+          curr = curr.parent
+        end
+        return names.reverse.join("/").insert(0, "/")
+      end
+
       # 子要素の名前を出力
-      def list
+      def ls
         tag = @children.map do |sub_tree|
           {:name => sub_tree.tag.name, :property => sub_tree.tag.property, :children => sub_tree.children}
         end
@@ -357,13 +368,20 @@ class Scrape
         false
       end
 
+      def info
+        out = ""
+        out << "path => #{pwd}\n"
+        out << @tag.property_show unless @tag.nil?
+        return out
+      end
+
       # 子要素へアクセス
       def method_missing(method, *args, &block)
         tree = @children.find do |sub_tree| 
           sub_tree.tag.name == method.to_s
         end
         
-        # メソッドがない場合は @tag へメソッドを送る
+        # メソッドがない場合は @tag へメソッドを問い合わせる
         if tree.nil?
           super unless @tag.methods.include? method.to_sym
           @tag.send method, *args, &block
@@ -417,7 +435,7 @@ class Scrape
     ##############################    
 
     class Tag
-      attr_reader :name, :property, :content
+      attr_reader :name, :property, :content, :info, :property_show
 
       class << self
         attr_accessor :html
@@ -434,6 +452,14 @@ class Scrape
 
       def show
         puts "name = #{@name},   property = #{@property},   pos_start = #{@pos_start},   pos_end = #{@pos_end},   content = #{@content}"
+      end
+
+      def cat
+        print "#{@content}".chop
+      end
+
+      def info
+        puts "name = #{@name}, property = #{@property}"
       end
 
       def set_pos_end(pos)
@@ -488,6 +514,19 @@ class Scrape
         my_id = property_select(:id)
         my_class = property_select(:class)
         [@name, my_id, my_class]
+      end
+
+      # プロパティを表示する
+      def property_show
+        out = ""
+        unless @property.nil?
+          @property.each do |hash|
+            hash.each do |key, value|
+              out << "#{key} => #{value}\n"
+            end
+          end
+        end
+        out
       end
 
       # プロパティ同士を比較する
